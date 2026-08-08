@@ -225,8 +225,15 @@ class GoogleServiceBase
      */
     protected function createObject(GenericObject $object): ?string
     {
-        $inserted = $this->walletService->genericobject->insert($object);
-        return $this->getLink($inserted->id);
+        try {
+            $inserted = $this->walletService->genericobject->insert($object);
+            return $this->getLink($inserted->id);
+        } catch (\Google\Service\Exception $error) {
+            if (!empty($error->getErrors()) && $error->getErrors()[0]['reason'] === 'existingResource') {
+                return $this->getLink($object->id);
+            }
+            throw $error;
+        }
     }
 
     /**
