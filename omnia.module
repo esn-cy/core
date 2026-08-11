@@ -1,5 +1,7 @@
 <?php /** @noinspection PhpUnused */
 
+use Drupal\omnia\Service\EmailService;
+
 /**
  * Implements hook_element_info_alter().
  */
@@ -15,4 +17,24 @@ function omnia_element_info_alter(array &$types): void
             $types['toolbar']['#attached']['library'][] = 'omnia/admin_menu_icon_default';
         }
     }
+}
+
+/**
+ * Implements hook_theme().
+ * @throws ReflectionException
+ * @noinspection PhpUnusedParameterInspection
+ */
+function omnia_theme($existing, $type, $theme, $path): array {
+    $emailClasses = [];
+
+    return EmailService::processHookTheme($emailClasses);
+}
+
+/**
+ * Implements hook_mail().
+ * @noinspection PhpUnusedParameterInspection
+ */
+function omnia_mail($key, &$message, $params): void
+{
+    EmailService::processHookMail($message, $params);
 }

@@ -191,6 +191,37 @@ class SettingsForm extends ConfigFormBase
             ];
         }
 
+        $form['email'] = [
+            '#type' => 'details',
+            '#title' => $this->t('Email Settings'),
+            '#description' => $this->t('Configuration for the parameters needed for sending emails.'),
+            '#open' => true
+        ];
+
+        $form['email']['email_address'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Sender Email Address'),
+            '#description' => $this->t('Enter the email address from where the emails will be sent.'),
+            '#default_value' => $omniaSettings->getEmailAddress(),
+            '#required' => true
+        ];
+
+        $form['email']['email_name'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Sender Email Name'),
+            '#description' => $this->t('Enter the user-friendly name from where the emails will be sent.'),
+            '#default_value' => $omniaSettings->getEmailName(),
+            '#required' => true
+        ];
+
+        $form['email']['email_footer'] = [
+            '#type' => 'textarea',
+            '#title' => $this->t('Email Footer'),
+            '#description' => $this->t('Enter the HTML for the footer of the emails to be sent.'),
+            '#default_value' => $omniaSettings->getEmailFooter(),
+            '#required' => true
+        ];
+
         $form['stripe'] = [
             '#type' => 'details',
             '#title' => $this->t('Stripe Settings'),
@@ -323,6 +354,9 @@ class SettingsForm extends ConfigFormBase
             ->setOrganisationName($selectedOrganisation->getTitle())
             ->setOrganisationLogoURL($selectedOrganisation->getRemoteLogoPath())
             ->setSectionMode($sectionMode)
+            ->setEmailAddress($form_state->getValue('email_address'))
+            ->setEmailName($form_state->getValue('email_name'))
+            ->setEmailFooter($form_state->getValue('email_footer'))
             ->setStripeSecretKey($form_state->getValue('stripe_secret_key'))
             ->setGoogleIssuerID($form_state->getValue('google_issuer_id'))
             ->setAppleTeamID($form_state->getValue('apple_team_id'));

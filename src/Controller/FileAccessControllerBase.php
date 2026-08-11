@@ -40,7 +40,7 @@ abstract class FileAccessControllerBase extends ControllerBase
     }
 
     /**
-     * Downloads a file from the membership scheme.
+     * Downloads a file from the declared scheme.
      *
      * @param string $path The path relative to the scheme (e.g. omnia://path).
      *
