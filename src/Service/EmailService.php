@@ -106,7 +106,7 @@ class EmailService
      * Uses Reflection to instantiate the provided classes without invoking their strict constructors, mapping their
      * getVariables() output to empty strings for the theme registry.
      *
-     * @param EmailInterface[] $emailClasses An array of fully qualified class names implementing EmailInterface.
+     * @param class-string[] $emailClasses An array of fully qualified class names implementing EmailInterface.
      *
      * @return array An associative array formatted for hook_theme().
      *
